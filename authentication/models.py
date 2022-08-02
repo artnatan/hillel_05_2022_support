@@ -1,9 +1,10 @@
-from pyexpat import model
-from tabnanny import verbose
+from tabnanny import verbose  # noqa: F401
 from typing import Optional
 
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, UserManager
 from django.db import models
+from pyexpat import model  # noqa: F401
+
 from shared.django import TimeStampMixin
 
 
@@ -30,8 +31,9 @@ class CustomUserManager(UserManager):
 
 class Role(TimeStampMixin):
     """User's role. Use for given permissions"""
+
     name = models.CharField(max_length=50)
-    
+
 
 class User(AbstractBaseUser, PermissionsMixin, TimeStampMixin):
     """This is my custom User model"""
@@ -46,9 +48,9 @@ class User(AbstractBaseUser, PermissionsMixin, TimeStampMixin):
     is_staff = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
     is_superuser = models.BooleanField(default=False)
-    
+
     # role = models.ForeignKey(null=True, default=)
-    
+
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
