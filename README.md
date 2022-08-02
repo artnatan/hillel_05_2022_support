@@ -1,4 +1,4 @@
-# Project name: HILLEL_05_2022_SUPPORT
+# :arrow_forward: Project name: HILLEL_05_2022_SUPPORT :arrow_backward:
 
 ## Create a project
 
@@ -64,13 +64,17 @@ python manage.py startapp 'name'
 ---
 
 ### Model schematic
-![Model Schematic](https://github.com/artnatan/hillel_05_2022_support/tree/main/docs/support_application_2.jpeg)
+![Model Schematic](https://github.com/artnatan/hillel_05_2022_support/docs/support_application_2.jpeg)
 ---
 </br>
 
 ## __Structure__
 ---
-### - __сonfig__ - `project configuration, directory with files for setting up and running the project`
+
+### __config__
+
+### `project configuration, directory with files for setting up and running the project`
+</br>
 
 - __settings__ - `The file contains project settings. By default, there are already basic settings that can be changed / supplemented.`
 
@@ -79,13 +83,17 @@ python manage.py startapp 'name'
 - __ __init__ __ __.py__ - `With this file, django recognizes the folder (containing __init__) as a Python module and allows its objects to be imported inside other parts of the project.`
 - __asgi.py__ - `Asynchronous Server Gateway Interface. Client-server protocol for interaction between a web server and an application`
 - __wsgi.py__ - `Web Server Gateway Interface. Standard for the interaction between a Python program running on the server side and the web server itself`
-> NOTE: While WSGI is a standard for synchronous Python applications, ASGI provides a standard for both asynchronous and synchronous applications..
+> NOTE: While WSGI is a standard for synchronous Python applications, ASGI provides a standard for both asynchronous and synchronous applications.
 
 ---
-### - __authentication__ - `this part of the project is responsible for the user's behavior and his role in the system, including user authorization process`
-- __pycache__/ - [see here](#сonfig---project-configuration-directory-with-files-for-setting-up-and-running-the-project)
+### __authentication__
 
-- __ __init__ __ __.py__ - [see here](#сonfig---project-configuration-directory-with-files-for-setting-up-and-running-the-project)
+### `this part of the project is responsible for the user's behavior and his role in the system, including user authorization process`
+</br>
+
+- __pycache__/ - [see here](#config)
+
+- __ __init__ __ __.py__ - [see here](#config)
 - __admin.py__ - `registering the User and Role model in the admin panel`
 - __migrations/__ - `migrations are generated per app, and are stored in "migrations" folder of each app. Database tables are created/updated based on migrations`
 - __apps.py__ - `This file is created to help the user include any` [application configuration](https://docs.djangoproject.com/en/4.0/ref/applications/#application-configuration) `for the app. Using this, you can configure some of the attributes of the application`
@@ -95,10 +103,15 @@ python manage.py startapp 'name'
 - __views.py__ - `View is a Python function or a Python class method. It creates a page/content display depending on the functions of the application model. Such views are written in the file "views.py"`
 
 ---
-### - __core__ - `the key part of the project, includes setting up the Tickets and Comment models and the functionality of working with them`
-- __pycache__/ - [see here](#сonfig---project-configuration-directory-with-files-for-setting-up-and-running-the-project)
 
-- __ __init__ __ __.py__ - [see here](#сonfig---project-configuration-directory-with-files-for-setting-up-and-running-the-project)
+### __core__
+
+### `the key part of the project, includes setting up the Tickets and Comment models and the functionality of working with them`
+</br>
+
+- __pycache__/ - [see here](#config)
+
+- __ __init__ __ __.py__ - [see here](#config)
 - __admin.py__ - `registering Ticket and Comment models in the admin panel`
 - __migrations/__ - [see here](#authentication)
 - __api/__ - `part responsible for the functionality, a set of actions that can be performed on the application. In this case description of the functionality of working with Tickets and Comments`
@@ -109,10 +122,11 @@ python manage.py startapp 'name'
 
 ---
 ### - __shared__ - `stand-alone application that includes common functions necessary for the operation of other applications of the project`
-- __pycache__/ - [see here](#сonfig---project-configuration-directory-with-files-for-setting-up-and-running-the-project)
+- __pycache__/ - [see here](#config)
 
 - __django__/ - `includes file "models" with a description of the universal model and unpacking file "__init__.py" for easier import.`
-- __ __init__ __ __.py__ - [see here](#сonfig---project-configuration-directory-with-files-for-setting-up-and-running-the-project)
+- 
+- __ __init__ __ __.py__ - [see here](#config)
 
 ---
 ### - __docs__ - `folder with useful additional files`
@@ -125,7 +139,7 @@ python manage.py startapp 'name'
 </br>
 
 #### __Schema db__
-![Schema db](https://github.com/artnatan/hillel_05_2022_support/tree/main/docs/database.png)
+![Schema db](https://github.com/artnatan/hillel_05_2022_support/docs/database.png)
 
 </br>
 
