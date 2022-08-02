@@ -71,7 +71,7 @@ python manage.py startapp 'name'
 ## __Structure__
 ---
 
-### __config__
+## __config__
 
 ### `project configuration, directory with files for setting up and running the project`
 </br>
@@ -86,7 +86,7 @@ python manage.py startapp 'name'
 > NOTE: While WSGI is a standard for synchronous Python applications, ASGI provides a standard for both asynchronous and synchronous applications.
 
 ---
-### __authentication__
+## __authentication__
 
 ### `this part of the project is responsible for the user's behavior and his role in the system, including user authorization process`
 </br>
@@ -104,7 +104,7 @@ python manage.py startapp 'name'
 
 ---
 
-### __core__
+## __core__
 
 ### `the key part of the project, includes setting up the Tickets and Comment models and the functionality of working with them`
 </br>
@@ -121,7 +121,10 @@ python manage.py startapp 'name'
 - __views.py__ - [see here](#authentication)
 
 ---
-### - __shared__ - `stand-alone application that includes common functions necessary for the operation of other applications of the project`
+## __shared__ 
+### `stand-alone application that includes common functions necessary for the operation of other applications of the project`
+</br>
+
 - __pycache__/ - [see here](#config)
 
 - __django__/ - `includes file "models" with a description of the universal model and unpacking file "__init__.py" for easier import.`
