@@ -64,7 +64,7 @@ python manage.py startapp 'name'
 ---
 
 ### Model schematic
-![Model Schematic](https://github.com/artnatan/hillel_05_2022_support/docs/support_application_2.jpeg)
+![Model Schematic](https://github.com/artnatan/hillel_05_2022_support/blob/main/docs/support_application_2.jpeg)
 ---
 </br>
 
@@ -139,7 +139,7 @@ python manage.py startapp 'name'
 </br>
 
 #### __Schema db__
-![Schema db](https://github.com/artnatan/hillel_05_2022_support/docs/database.png)
+![Schema db](https://github.com/artnatan/hillel_05_2022_support/blob/main/docs/database.png)
 
 </br>
 
