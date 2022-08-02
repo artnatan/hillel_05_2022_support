@@ -128,17 +128,17 @@ python manage.py startapp 'name'
 - __pycache__/ - [see here](#config)
 
 - __django__/ - `includes file "models" with a description of the universal model and unpacking file "__init__.py" for easier import.`
-- 
+  
 - __ __init__ __ __.py__ - [see here](#config)
 
 ---
-### - __docs__ - `folder with useful additional files`
+### __docs__ - `folder with useful additional files`
 
 ---
-### - __manage.py__ - `configuration file, allows you to enter commands for working with the project and executes them according to the settings (config.settings)`
+### __manage.py__ - `configuration file, allows you to enter commands for working with the project and executes them according to the settings (config.settings)`
 
 ---
-### - __db.sqlite3__ - `a database whose tables are created based on the implemented classes`
+### __db.sqlite3__ - `a database whose tables are created based on the implemented classes`
 </br>
 
 #### __Schema db__
@@ -147,7 +147,7 @@ python manage.py startapp 'name'
 </br>
 
 ---
-### - __Pipfile__ - [see here](#dependencies-files)
+### __Pipfile__ - [see here](#dependencies-files)
 
 ---
-### - __Pipfile.lock__ - [see here](#dependencies-files)
+### __Pipfile.lock__ - [see here](#dependencies-files)
