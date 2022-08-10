@@ -11,18 +11,32 @@ ALLOWED_HOSTS = []
 
 # Application definition
 
-INSTALLED_APPS = [
-    # django apps
+DJANGO_APPS = [
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    # local apps
+]
+
+THIRD_PATY_APPS = [
+    "django_extensions",
+    "rest_framework",
+]
+
+LOCAL_APPS = [
     "core",
     "authentication",
+    "exchange_rates",
 ]
+
+ADMIN_APPS = [
+    "django_admin_listfilter_dropdown",
+]
+
+INSTALLED_APPS = DJANGO_APPS + THIRD_PATY_APPS + LOCAL_APPS + ADMIN_APPS
+
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
