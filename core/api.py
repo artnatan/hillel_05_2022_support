@@ -1,84 +1,50 @@
-from django.contrib.auth import get_user_model
-from rest_framework import decorators, response, serializers
+from rest_framework import status
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
 
-from authentication.models import Role
 from core.models import Ticket
-
-User = get_user_model()
-
-
-def user_as_dict(user: User) -> dict:
-    return {
-        "username": user.username,
-        "email": user.email,
-        "phone": user.phone,
-        "first_name": user.first_name,
-        "last_name": user.last_name,
-        "age": user.age,
-    }
+from core.serializer import TicketLightSerializer, TicketSerializer
 
 
-def ticket_as_dict(ticket: Ticket) -> dict:
-    return {
-        "id": ticket.id,
-        "theme": ticket.theme,
-        "discription": ticket.description,
-        "operator": user_as_dict(ticket.operator),
-        "resolved": ticket.resolved,
-        "created_at": ticket.created_at,
-        "updated_at": ticket.updated_at,
-    }
+@api_view(["GET", "POST"])
+def get_post_tickets(request) -> dict:
+    if request.method == "GET":
+        tickets = Ticket.objects.all()
+        data = TicketLightSerializer(tickets, many=True).data
+        return Response(data=data)
+    serializer = TicketSerializer(data=request.data)
+    serializer.is_valid()
+    instance = serializer.create(serializer.validated_data)
+    results = TicketSerializer(instance).data
+    return Response(data=results, status=status.HTTP_201_CREATED)
 
 
-class RoleSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Role
-        fields = [
-            "id",
-        ]
+@api_view(["GET", "PUT", "DELETE"])
+def retrieve_update_delete_ticket(request, id_: int) -> dict:
+    initial_ticket = Ticket.objects.get(id=id_)
+    if request.method == "GET":
+        data = TicketSerializer(initial_ticket).data
+        return Response(data=data)
+    elif request.method == "PUT":
+        serializer = TicketSerializer(data=request.data)
+        serializer.is_valid()
+        instance = serializer.update(initial_ticket, serializer.validated_data)
+        results = TicketSerializer(instance).data
+        return Response(data=results)
 
+    # NOTE: I made the PUT method in the same way as we did the POST method in the lesson.
+    # Code above.
+    # Basically, in the examples I met the code below (both when using the PUT method
+    # and the POST method). This edition uses the save() method instead of update() if PUT,
+    # and create() if POST. Also serialization happens only once. And checking for validity,
+    # instead of leading to validity.
 
-class UserSerializer(serializers.ModelSerializer):
-    role = RoleSerializer()
+    # serializer = TicketSerializer(initial_ticket, data=request.data)
+    # if serializer.is_valid():
+    #     serializer.save()
+    #     return Response(data=serializer.data)
+    # return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    class Meta:
-        model = User
-        fields = [
-            "id",
-            "role",
-            "email",
-            "username",
-            "first_name",
-            "last_name",
-            "age",
-            "phone",
-        ]
-
-
-class TicketSerializer(serializers.ModelSerializer):
-    operator = UserSerializer()
-    client = UserSerializer()
-
-    class Meta:
-        model = Ticket
-        fields = [
-            "id",
-            "operator",
-            "client",
-            "theme",
-            "description",
-            "resolved",
-        ]
-
-
-@decorators.api_view(["GET"])
-def get_all_tickets(request) -> dict:
-    tickets = Ticket.objects.all()
-    data = TicketSerializer(tickets, many=True).data
-    return response.Response(data=data)
-
-
-# def get_all_tickets(request) -> dict:
-#     tickets = Ticket.objects.all()
-#     results = {"results": [ticket_as_dict(ticket) for ticket in tickets]}
-#     return JsonResponse(results)
+    elif request.method == "DELETE":
+        initial_ticket.delete()
+        return Response({"message": "Ticket was deleted"}, status=status.HTTP_204_NO_CONTENT)

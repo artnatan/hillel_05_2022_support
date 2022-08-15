@@ -16,19 +16,11 @@ class TicketAdmin(admin.ModelAdmin):
         "operator",
         "client",
     ]
-    list_display_links = [
-        "theme",
-    ]
+    list_display_links = ["theme"]
     # filtering for Tickets by operator
-    list_filter = [
-        "operator",
-    ]
-    search_fields = [
-        "theme",
-    ]
-    inlines = [
-        CommentsInLine,
-    ]
+    list_filter = ["operator"]
+    search_fields = ["theme"]
+    inlines = [CommentsInLine]
 
 
 @admin.register(Comment)

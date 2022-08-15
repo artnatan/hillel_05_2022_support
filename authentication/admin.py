@@ -19,18 +19,10 @@ class TicketsForOperator(admin.TabularInline):
 
 @admin.register(User)
 class UserAdmin(admin.ModelAdmin):
-    exclude = [
-        "user_permissions",
-        "groups",
-    ]
-    readonly_fields = [
-        "password",
-        "last_login",
-    ]
+    exclude = ["user_permissions", "groups"]
+    readonly_fields = ["password", "last_login"]
     # filtering for Users by age
-    list_filter = [
-        "age",
-    ]
+    list_filter = ["age"]
     inlines = [TicketsForClient, TicketsForOperator]
 
 
