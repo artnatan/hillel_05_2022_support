@@ -26,7 +26,7 @@ def retrieve_update_delete_ticket(request, id_: int) -> dict:
         data = TicketSerializer(initial_ticket).data
         return Response(data=data)
     elif request.method == "PUT":
-        serializer = TicketSerializer(data=request.data)
+        serializer = TicketSerializer(data=request.data, partial=True)
         serializer.is_valid()
         instance = serializer.update(initial_ticket, serializer.validated_data)
         results = TicketSerializer(instance).data
@@ -39,7 +39,7 @@ def retrieve_update_delete_ticket(request, id_: int) -> dict:
     # and create() if POST. Also serialization happens only once. And checking for validity,
     # instead of leading to validity.
 
-    # serializer = TicketSerializer(initial_ticket, data=request.data)
+    # serializer = TicketSerializer(initial_ticket, data=request.data, partial=True)
     # if serializer.is_valid():
     #     serializer.save()
     #     return Response(data=serializer.data)
