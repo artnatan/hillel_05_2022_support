@@ -8,14 +8,28 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-      - name: Install Python, pipenv and Pipfile packages
-        uses: palewire/install-python-pipenv-pipfile@v2
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v3
         with:
-          python-version: 3.10.0
-      - name: Run tests
-        run: |
-          pipenv install --dev
-          pipenv run flake8 ./
-          pipenv run black --check ./ && isort --check-only ./
+          python-version: '3.10'
+
+      - name: Install deps
+        uses: VaultVulp/action-pipenv@v2.0.1
+        with:
+          command: install -d
+          
+      - name: Run black
+        uses: VaultVulp/action-pipenv@v2.0.1
+        with:
+          command: run black --check ./
+
+      - name: Run isort
+        uses: VaultVulp/action-pipenv@v2.0.1
+        with:
+          command: run isort --check-only ./      
+        
+      - name: Run linter
+        uses: VaultVulp/action-pipenv@v2.0.1
+        with:
+          command: run flake8 ./
+      
