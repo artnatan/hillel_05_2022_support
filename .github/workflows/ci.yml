@@ -16,7 +16,7 @@ jobs:
           python-version: 3.9.13
       - name: Run tests
         run: |
-          pipenv install --dev
+          pipenv install
           pipenv run pytest
       - name: Run linter
         run: flake8 ./
