@@ -17,4 +17,5 @@ jobs:
       - name: Run tests
         run: |
           pipenv install --dev
-          pipenv run pytest
+          pipenv run flake8 ./
+          pipenv run black --check ./ && isort --check-only ./
