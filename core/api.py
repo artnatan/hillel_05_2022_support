@@ -15,7 +15,7 @@ from core.serializer import TicketLightSerializer, TicketSerializer
 
 class HasPermission(BasePermission):
 
-    """class for checking user authorization"""
+    """ class for checking user authorization """
 
     def has_permission(self, request, view):
 
