@@ -91,7 +91,9 @@ class TicketLightSerializer(serializers.ModelSerializer):
         fields = [
             "id",
             "theme",
+            "description",
             "resolved",
             "operator",
             "client",
         ]
+        extra_kwargs = {"description": {"write_only": True}}
