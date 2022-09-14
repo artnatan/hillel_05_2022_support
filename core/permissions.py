@@ -1,4 +1,4 @@
-from django.core.exceptions import ValidationError
+from django.core.exceptions import BadRequest, ValidationError
 from rest_framework.permissions import BasePermission
 
 from authentication.models import DEFAULT_ROLES
@@ -31,7 +31,7 @@ class HasPermission(BasePermission):
 
         # NOTE: If name of "empty" parameter is incorrect
         if request.method == "GET" and request.GET.get("empty") not in [None, "true", "false"]:
-            raise ValidationError("ErrorName. Parameter 'empty' can be 'true' or 'false'")
+            raise BadRequest("ErrorName. Parameter 'empty' can be 'true' or 'false'")
 
         if request.method in method_list:
             return request.user.is_authenticated
