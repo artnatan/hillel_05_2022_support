@@ -1,38 +1,22 @@
-# for FBV implementation
-from urllib.error import HTTPError  # noqa: F401
+from django.db.models import Q
+from rest_framework.generics import (
+    ListCreateAPIView,
+    RetrieveUpdateDestroyAPIView,
+    UpdateAPIView,
+)
+from rest_framework.response import Response
 
-from rest_framework import status  # noqa: F401
-from rest_framework.decorators import api_view  # noqa: F401
-from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
-from rest_framework.permissions import BasePermission
-
-# for FBV implementation
-from rest_framework.response import Response  # noqa: F401
-
+from authentication.models import DEFAULT_ROLES
 from core.models import Ticket
-from core.serializer import TicketLightSerializer, TicketSerializer
+from core.permissions import HasPermission, OperatorOnly
+from core.serializers.tickets import (
+    TicketAssignSerializer,
+    TicketLightSerializer,
+    TicketSerializer,
+)
+from core.services import TicketCRUD
 
 
-class HasPermission(BasePermission):
-
-    """class for checking user authorization"""
-
-    def has_permission(self, request, view):
-
-        # NOTE: Refers to the first part of the task, where all tickets could be received by anyone.
-        # method_list = ["POST", "PUT", "DELETE"]
-        # if request.method in method_list:
-        #     return request.user.is_authenticated
-        # return True
-
-        method_list = ["POST", "PUT", "DELETE", "GET"]
-        if request.method in method_list:
-            return request.user.is_authenticated
-        return False
-
-
-# NOTE: added a "description" field to TicketLightSerializer and included it with "extra_kwargs".
-# I am not sure if this is the correct approach, because the LightSerializer is made so as not to load too much.
 class TicketsListCreateAPI(ListCreateAPIView):
     http_method_names = ["post", "get"]
     serializer_class = TicketSerializer
@@ -40,12 +24,25 @@ class TicketsListCreateAPI(ListCreateAPIView):
     queryset = Ticket.objects.all()
 
     def get_queryset(self):
+        user = self.request.user
+        filter_parameter = self.request.GET.get("empty")
+
         if self.request.method == "GET":
             # if the user is not admin
-            if self.request.user.role_id == 2:
+            if user.role_id == DEFAULT_ROLES["user"]:
                 self.serializer_class = TicketLightSerializer
-                return Ticket.objects.filter(client=self.request.user)
-            return Ticket.objects.all()
+                return Ticket.objects.filter(client=user)
+
+            # NOTE: returns tickets with "empty" parametr
+            # error output is described in permission.py
+            elif user.role_id == DEFAULT_ROLES["admin"] and filter_parameter is not None:
+                if filter_parameter == "true":
+                    return Ticket.objects.filter(operator__isnull=True)
+                else:
+                    return Ticket.objects.filter(operator=user)
+
+            # NOTE: returns all tickets with no operator and ticket where this admin is operator
+            return Ticket.objects.filter(Q(operator__isnull=True) | Q(operator=user))
 
 
 class TicketRetriveAPI(RetrieveUpdateDestroyAPIView):
@@ -55,6 +52,42 @@ class TicketRetriveAPI(RetrieveUpdateDestroyAPIView):
     permission_classes = [HasPermission]
     lookup_field = "id"
     lookup_url_kwargs = "id"
+
+    def get_queryset(self):
+        user = self.request.user
+        if user.role_id == DEFAULT_ROLES["user"]:
+            return Ticket.objects.filter(client=user)
+        return Ticket.objects.filter(operator=user)
+
+
+class TicketAssignAPI(UpdateAPIView):
+    http_method_names = ["patch"]
+    serializer_class = TicketAssignSerializer
+    permission_classes = [OperatorOnly]
+    lookup_field = "id"
+    lookup_url_kwargs = "id"
+
+    def get_queryset(self):
+        return Ticket.objects.filter(operator=None)
+
+
+class TicketResolveAPI(UpdateAPIView):
+    http_method_names = ["patch"]
+    serializer_class = TicketLightSerializer
+    permission_classes = [OperatorOnly]
+    lookup_field = "id"
+    lookup_url_kwargs = "id"
+
+    def get_queryset(self):
+        user = self.request.user
+        return Ticket.objects.filter(operator=user)
+
+    def update(self, request, *args, **kwargs):
+        instance = self.get_object()
+        instance = TicketCRUD.change_resolved_status(instance)
+        serializer = self.get_serializer(instance)
+
+        return Response(serializer.data)
 
 
 # NOTE: FBV implementation. I keep it for myself as notes
