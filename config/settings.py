@@ -101,6 +101,9 @@ AUTH_PASSWORD_VALIDATORS = [
     {
         "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
     },
+    {
+        "NAME": "config.validators.MyCustomPasswordValidator",
+    },
 ]
 
 
@@ -143,7 +146,7 @@ SIMPLE_JWT = {
 
 
 DJOSER = {
-    "SET_PASSWORD_RETYPE": True,
+    "USER_CREATE_PASSWORD_RETYPE": True,
 }
 
 
