@@ -8,7 +8,7 @@ from rest_framework.response import Response
 
 from authentication.models import DEFAULT_ROLES
 from core.models import Ticket
-from core.permissions import HasPermission, OperatorOnly
+from core.permissions import OperatorOnly, UserPermissions
 from core.serializers.tickets import (
     TicketAssignSerializer,
     TicketLightSerializer,
@@ -19,23 +19,30 @@ from core.services import TicketCRUD
 
 class TicketsListCreateAPI(ListCreateAPIView):
     http_method_names = ["post", "get"]
-    serializer_class = TicketSerializer
-    permission_classes = [HasPermission]
+    permission_classes = [UserPermissions]
     queryset = Ticket.objects.all()
+
+    def get_serializer_class(self):
+        user = self.request.user
+        if self.request.method == "GET" and user.role_id == DEFAULT_ROLES["user"]:
+            return TicketLightSerializer
+        return TicketSerializer
 
     def get_queryset(self):
         user = self.request.user
-        filter_parameter = self.request.GET.get("empty")
+        # check that parametr "empty" is enabled
+        if "empty" in self.request.query_params.keys():
+            filter_parameter = self.request.query_params["empty"]
+        filter_parameter = ""
 
         if self.request.method == "GET":
             # if the user is not admin
             if user.role_id == DEFAULT_ROLES["user"]:
-                self.serializer_class = TicketLightSerializer
                 return Ticket.objects.filter(client=user)
 
             # NOTE: returns tickets with "empty" parametr
             # error output is described in permission.py
-            elif user.role_id == DEFAULT_ROLES["admin"] and filter_parameter is not None:
+            elif user.role_id == DEFAULT_ROLES["admin"] and filter_parameter != "":
                 if filter_parameter == "true":
                     return Ticket.objects.filter(operator__isnull=True)
                 else:
@@ -49,7 +56,7 @@ class TicketRetriveAPI(RetrieveUpdateDestroyAPIView):
     http_method_names = ["patch", "get", "delete"]
     queryset = Ticket.objects.all()
     serializer_class = TicketSerializer
-    permission_classes = [HasPermission]
+    permission_classes = [UserPermissions]
     lookup_field = "id"
     lookup_url_kwargs = "id"
 
