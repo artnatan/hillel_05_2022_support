@@ -50,5 +50,20 @@ class Comment(TimeStampMixin):
         related_name="next",
     )
 
+    reply_to = models.ForeignKey(
+        "self",
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name="answers",
+    )
+
     def __str__(self) -> str:
         return str(self.ticket)
+
+    def save(self, *args, **kwargs):
+        if self.prev_comment and self.prev_comment.id == self.pk:
+            raise ValueError("Current comment can not be Prev comment.")
+        if self.reply_to and self.reply_to.id == self.pk:
+            raise ValueError("You can not replay on a current comment")
+        return super().save(*args, **kwargs)
