@@ -151,3 +151,70 @@ python manage.py startapp 'name'
 
 ---
 ### __Pipfile.lock__ - [see here](#dependencies-files)
+
+</br>
+
+---
+# __Dockerize__
+
+
+## Docker
+### basic commands
+```c
+docker build -t 'name' 'directory'  - builds an custom image
+
+docker run 'tag/id'     - running a program in a container
+
+docker ps -a    - view containers
+
+docker rm 'id'  - delete container by id
+
+docker image prune  - remove none images
+```
+## Dockerfile
+`The sequence of commands for creating an image with the program, the establishment of dependencies and the order of launch, etc.`
+
+### to start the project "`support`" using a dockerfile
+```c
+docker build -t support_django .
+
+docker run -p 8000:80 -v $PWD:/app/ --rm -it support_django
+```
+
+## Docker-compose
+
+## docker-compose.yaml
+`description of configurations for working with the project through docker-compose`
+
+### structure docker-compose.yaml of "`support`" project
+```
+version:                - Docker version
+
+services:               - used services
+  postgres:             - database used in the project
+    image:              - image for service
+    container_name:     - service name
+    ports:              - port for connection
+    environment:        - parameters for the database
+    volumes:            - volume indication
+
+  django:               - framework used in the project
+    build:              - assembly based
+    image:
+    container_name:
+    depends_on:         - sequencing
+```
+### basic commands
+```c
+docker-compose build - run project based on dockerfile
+docker-compose up 'servise' - start service
+docker-compose logs - see logs
+docker-compose down - stop work
+```
+
+### launch "`support`" project
+```c
+docker-compose build
+docker-compose up -d
+
+```

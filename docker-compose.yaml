@@ -1,0 +1,30 @@
+version: "3"
+
+services:
+  postgres:
+    image: postgres:13.3
+    container_name: support_postgres
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=support
+      - POSTGRES_PASSWORD=support1234
+      - POSTGRES_DB=support
+    volumes:
+      pg_data:/var/lib/postgresql/data
+
+  django:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: support_django
+    container_name: support_django
+    depends_on:
+      - postgres
+    ports:
+      - "8000:80"
+    volumes:
+      - ./:/app/
+
+volumes:
+  pg_data: {}

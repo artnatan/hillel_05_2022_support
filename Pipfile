@@ -10,6 +10,7 @@ django-admin-searchable-dropdown = "==1.2"
 django-admin-list-filter-dropdown = "==1.0.3"
 djangorestframework = "==3.12.1"
 djoser= "==2.1.0"
+psycopg2-binary = "==2.9.3"
 
 [dev-packages]
 black = "==22.6.0"
@@ -21,4 +22,3 @@ django-extensions = "==3.2.0"
 
 [requires]
 python_version = "3.9"
-
