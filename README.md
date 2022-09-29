@@ -173,6 +173,23 @@ docker image prune  - remove none images
 ```
 ## Dockerfile
 `The sequence of commands for creating an image with the program, the establishment of dependencies and the order of launch, etc.`
+### Dockerfile structure of "`support`" project
+```bash
+FROM        - image based
+
+WORKDIR     - change working directory
+
+COPY        - copy project file
+
+# Install deps
+RUN pip install pipenv \
+    && pipenv install --system --deploy --ignore-pipfile --dev
+
+# Commands: delay (to be in time to complete migrations), migrations, launch
+CMD sleep 3 \
+    && python manage.py migrate \
+    && python manage.py runserver 0.0.0.0:80
+```
 
 ### to start the project "`support`" using a dockerfile
 ```c
