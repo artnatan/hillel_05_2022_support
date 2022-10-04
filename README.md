@@ -56,6 +56,15 @@ python manage.py startapp 'name'
 3. .flake8 - `a file with additional settings for the flake8 linter, such as the maximum length of a line of code, exceptions, etc.`
 4. pyproject.toml - `intended for configuring black (code formatter) and isort (sorter) utilities by analogy with .flake8`
 5. .pre-commit-config.yaml - `hooks are needed to identify problems before submitting code to Git. The file includes a check by black, isort, flake8`
+   
+   ### __Docker:__
+6. .dockerignore - `by analogy with gitignor, we ignore all files and folders that are not subject to dockeriz`
+7. dockerfile - `the sequence of commands for creating an image with the program, the establishment of dependencies and the order of launch, etc.`
+8. docker-compose.yaml - `description of configurations for working with the project through docker-compose`
+
+   ### __Environment variables:__
+9. .env - `mutable and/or hidden parameters`
+10. .env.default - `default parameters .env`
 
 ---
 </br>

@@ -1,4 +1,4 @@
-FROM python:3.10-slim
+FROM --platform=linux/x86_64 python:3.10-slim
 
 # receive build arguments
 ARG PIPENV_EXTRA_ARGS
@@ -17,5 +17,5 @@ RUN pip install pipenv \
 
 # CMD ["python", "manage.py", "runserver", "0.0.0.0:80"]
 CMD sleep 3 \
-    && python manage.py migrate \
-    && python manage.py runserver 0.0.0.0:80
+    && python src/manage.py migrate \
+    && python src/manage.py runserver 0.0.0.0:80
