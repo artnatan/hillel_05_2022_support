@@ -1,0 +1,7 @@
+materials/
+docs/
+.idea/
+.vscode/
+pre-commit-config.yaml
+*.md
+.gitignore/

@@ -212,7 +212,7 @@ services:               - used services
     image:              - image for service
     container_name:     - service name
     ports:              - port for connection
-    environment:        - parameters for the database
+    env_file:           - parameters for the database from .env
     volumes:            - volume indication
 
   django:               - framework used in the project
