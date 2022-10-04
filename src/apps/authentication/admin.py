@@ -1,8 +1,7 @@
 from django.contrib import admin
 
-from apps.core.models import Ticket
-
 from apps.authentication.models import Role, User
+from apps.core.models import Ticket
 
 
 class TicketsForClient(admin.TabularInline):
