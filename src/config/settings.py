@@ -44,7 +44,6 @@ INSTALLED_APPS = DJANGO_APPS + THIRD_PATY_APPS + LOCAL_APPS + ADMIN_APPS
 
 
 if DEBUG:
-    # django_extensions
     DEV_APPS = ["django_extensions"]
     INSTALLED_APPS += DEV_APPS
 

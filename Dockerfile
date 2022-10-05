@@ -11,11 +11,11 @@ COPY ./ ./
 
 # Install deps
 RUN pip install pipenv \
-    && pipenv install --system --deploy --ignore-pipfile $PIPENV_EXTRA_ARG
+    && pipenv install --system --deploy --ignore-pipfile $PIPENV_EXTRA_ARGS
 
 # RUN python manage.py migrate
 
 # CMD ["python", "manage.py", "runserver", "0.0.0.0:80"]
-CMD sleep 3 \
+CMD sleep 5 \
     && python src/manage.py migrate \
     && python src/manage.py runserver 0.0.0.0:80
