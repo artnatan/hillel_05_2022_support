@@ -23,11 +23,16 @@ DJANGO_APPS = [
     "django.contrib.sites",
 ]
 
+
 THIRD_PATY_APPS = [
     "rest_framework",
     "rest_framework.authtoken",
     "djoser",
 ]
+
+if DEBUG:
+    DEV_APPS = ["django_extensions"]
+    THIRD_PATY_APPS += DEV_APPS
 
 
 LOCAL_APPS = [
@@ -43,9 +48,7 @@ ADMIN_APPS = [
 INSTALLED_APPS = DJANGO_APPS + THIRD_PATY_APPS + LOCAL_APPS + ADMIN_APPS
 
 
-if DEBUG:
-    DEV_APPS = ["django_extensions"]
-    INSTALLED_APPS += DEV_APPS
+
 
 
 SITE_ID = 1
