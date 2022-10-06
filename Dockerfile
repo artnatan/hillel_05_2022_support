@@ -17,6 +17,6 @@ RUN pip install pipenv \
     && pipenv install --system --deploy --ignore-pipfile $PIPENV_EXTRA_ARGS
 
 
-CMD sleep 3 \
+CMD sleep 10 \
     && python src/manage.py migrate \
     && gunicorn src.config.wsgi:application --bind 0.0.0.0:80
