@@ -16,6 +16,6 @@ RUN pip install pipenv \
 # RUN python manage.py migrate
 
 # CMD ["python", "manage.py", "runserver", "0.0.0.0:80"]
-CMD sleep 5 \
+CMD sleep 10 \
     && python src/manage.py migrate \
     && python src/manage.py runserver 0.0.0.0:80
