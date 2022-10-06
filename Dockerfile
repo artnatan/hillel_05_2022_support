@@ -1,21 +1,22 @@
-FROM python:3.10-slim
+FROM --platform=linux/x86_64 python:3.10-slim
 
-# receive build arguments
+# Receive build arguments
 ARG PIPENV_EXTRA_ARGS
 
-# change working directory
+
+# Change working directory
 WORKDIR /app/
 
-# copy project file
+
+# Copy project files
 COPY ./ ./
+
 
 # Install deps
 RUN pip install pipenv \
     && pipenv install --system --deploy --ignore-pipfile $PIPENV_EXTRA_ARGS
 
-# RUN python manage.py migrate
 
-# CMD ["python", "manage.py", "runserver", "0.0.0.0:80"]
-CMD sleep 10 \
+CMD sleep 3 \
     && python src/manage.py migrate \
-    && python src/manage.py runserver 0.0.0.0:80
+    && gunicorn src.config.wsgi:application --bind 0.0.0.0:80
